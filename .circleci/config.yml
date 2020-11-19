@@ -18,7 +18,7 @@ jobs:
 
       - run: ./bin/golangci-lint run ./...
 
-      - run: go test -cover -count=1 ./...
+      - run: make test-unit
 
 workflows:
   version: 2

@@ -4,6 +4,9 @@ deps:
 lint:
 	golangci-lint run
 
-test: lint
+test-unit:
 	go test -cover -failfast ./...
+
+test-all:
+	go test --tags=integration -cover -failfast ./...
 
