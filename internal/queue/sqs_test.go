@@ -37,14 +37,13 @@ func TestMain(m *testing.M) {
 }
 
 func TestNewSQSClient_AWSSessionFails(t *testing.T) {
-	_, err := NewSQSClient(testConfig.QueueName, testConfig.Env)
+	_, err := NewSQSClient(testConfig.QueueName)
 	assert.NotNil(t, err)
 }
 
 func TestSQSClient_Publish(t *testing.T) {
 	client, err := NewSQSClient(
 		testConfig.QueueName,
-		testConfig.Env,
 		WithSQSLocalstackSession(),
 		WithSQSVisibilityTimeout(1),
 		WithSQSBatchSize(10),

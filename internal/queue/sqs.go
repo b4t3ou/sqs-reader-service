@@ -2,8 +2,6 @@ package queue
 
 import (
 	"encoding/json"
-	"fmt"
-
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -27,18 +25,17 @@ type SQSClient struct {
 	*sqs.SQS
 }
 
-func NewSQSClient(queueName, env string, options ...SQSClientOption) (*SQSClient, error) {
+func NewSQSClient(queueName string, options ...SQSClientOption) (*SQSClient, error) {
 	client := &SQSClient{
 		batchSize:         10,
 		visibilityTimeout: 10,
 		region:            domain.DefaultAWSRegion,
+		queueName:         queueName,
 	}
 
 	for _, option := range options {
 		option(client)
 	}
-
-	client.queueName = fmt.Sprintf("%s-%s-%s", env, client.region, queueName)
 
 	if err := client.setSession(); err != nil {
 		return nil, err

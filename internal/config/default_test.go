@@ -25,5 +25,5 @@ func TestNew_Env(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.Equal(t, "local", c.Env)
-	assert.Equal(t, "test-queue", c.QueueName)
+	assert.Equal(t, "local-eu-west-1-test-queue", c.QueueName)
 }
