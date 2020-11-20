@@ -6,8 +6,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
-	"github.com/rs/zerolog/log"
-
 	domain "github.com/b4t3ou/sqs-reader-service/internal"
 )
 
@@ -42,7 +40,6 @@ func NewSQSClient(queueName string, options ...SQSClientOption) (*SQSClient, err
 	}
 
 	client.SQS = sqs.New(client.session)
-	log.Info().Str("queueName", client.queueName).Msg("looking for queue url by name")
 
 	url, err := client.SQS.GetQueueUrl(&sqs.GetQueueUrlInput{QueueName: aws.String(client.queueName)})
 	if err != nil {

@@ -14,13 +14,19 @@ type SQSClient interface {
 	Delete(receiptHandle string) error
 }
 
-type SQS struct {
-	sqsClient SQSClient
+type DBClient interface {
+	Save(item domain.Event) error
 }
 
-func NewSQS(sqsClient SQSClient) SQS {
+type SQS struct {
+	sqsClient SQSClient
+	dbClient  DBClient
+}
+
+func NewSQS(sqsClient SQSClient, dbClient DBClient) SQS {
 	return SQS{
 		sqsClient: sqsClient,
+		dbClient:  dbClient,
 	}
 }
 
@@ -52,7 +58,8 @@ func (h SQS) saveEvent(message *sqs.Message) error {
 	}
 
 	log.Info().Interface("event", event).Msg("event has been received")
-	return nil
+
+	return h.dbClient.Save(event)
 }
 
 func (h SQS) deleteMessage(message *sqs.Message) {

@@ -9,8 +9,9 @@ import (
 )
 
 type Config struct {
-	Env       string `env:"ENV" envDefault:"local"`
-	QueueName string `yaml:"queueName"`
+	Env         string `env:"ENV" envDefault:"local"`
+	QueueName   string `yaml:"queueName"`
+	DynamoTable string `yaml:"dynamoTable"`
 }
 
 // NewConfig returns with a new Config object
